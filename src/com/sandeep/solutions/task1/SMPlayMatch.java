@@ -1,5 +1,7 @@
 package com.sandeep.solutions.task1;
 
+import com.sandeep.machine.learning.lms.LinearEquation;
+
 import de.ovgu.dke.teaching.ml.tictactoe.PlayMatch;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IBoard;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
@@ -16,7 +18,9 @@ public class SMPlayMatch
 	{
 		// initial target function w0 + w1*number_of_indicies_horizontal_free
 		// + w2*numbr_vertically_free + w3*number_horizonttal_our + w4*number_vertical_our
-		// w5*number_horizonttal_enemy + w6*number_vertical_enemy + w7 * diagnonally aligned 
+		// w5*number_horizonttal_enemy + w6*number_vertical_enemy + w7 * diagnonally aligned ours +
+		// w8*diagonally aligned enemy
+		LinearEquation targetFunction = new LinearEquation(8);
 		IBoard simpleGame = new Board2D(3);
 		IPlayer myself = new KeyboardPlayer();
 		IPlayer randomPlayer = new RandomPlayer();
