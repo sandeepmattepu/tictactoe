@@ -1,3 +1,5 @@
+package com.sandeep.solutions.task1;
+
 import de.ovgu.dke.teaching.ml.tictactoe.PlayMatch;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IBoard;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
@@ -8,27 +10,18 @@ import de.ovgu.dke.teaching.ml.tictactoe.player.KeyboardPlayer;
 import de.ovgu.dke.teaching.ml.tictactoe.player.RandomPlayer;
 import de.ovgu.dke.teaching.ml.tictactoe.player.SmartPlayer;
 
-public class SMPlayMatch extends PlayMatch 
+public class SMPlayMatch
 {
 	public static void main(String[] args)
 	{
+		// initial target function w0 + w1*number_of_indicies_horizontal_free
+		// + w2*numbr_vertically_free + w3*number_horizonttal_our + w4*number_vertical_our
+		// w5*number_horizonttal_enemy + w6*number_vertical_enemy + w7 * diagnonally aligned 
+		IBoard simpleGame = new Board2D(3);
+		IPlayer myself = new KeyboardPlayer();
+		IPlayer randomPlayer = new RandomPlayer();
 		
-		// Start of our experiment code
-		IPlayer smartPlayer = new KeyboardPlayer();
-		IPlayer keyBoardPlayer = new KeyboardPlayer();
-		IBoard boardToPlay = new Board3D(5);
-		
-		Match firstMatch = new Match(boardToPlay, smartPlayer, keyBoardPlayer);
-		firstMatch.play();
-		
-		IPlayer winner = firstMatch.getWinner();
-		if(winner != null)
-		{
-			System.out.println(winner.getName());
-		}
-		else
-		{
-			System.out.println("Its draw");
-		}
+		Match sampleMatch = new Match(simpleGame, myself, randomPlayer);
+		sampleMatch.play();
 	}
 }

@@ -1,3 +1,5 @@
+package com.sandeep.solutions.task1;
+
 import de.ovgu.dke.teaching.ml.tictactoe.api.IBoard;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IllegalMoveException;
