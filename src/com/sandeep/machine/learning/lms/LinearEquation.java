@@ -17,7 +17,8 @@ public class LinearEquation
 	public LinearEquation(int numberOfVariables)
 	{
 		coefficientValues = new float[numberOfVariables + 1];
-		variableValues = new float[numberOfVariables];
+		variableValues = new float[numberOfVariables + 1];
+		variableValues[0] = 1;
 	}
 	
 	/**
@@ -71,7 +72,7 @@ public class LinearEquation
 	 * */
 	public int degreeOfEquation()
 	{
-		return variableValues.length;
+		return variableValues.length - 1;
 	}
 	
 	/**
@@ -87,10 +88,9 @@ public class LinearEquation
 		}
 		else
 		{
-			result += coefficientValues[0];
 			for(int i = 0; i < variableValues.length; i++)
 			{
-				result += (coefficientValues[i+1] * variableValues[i]);
+				result += (coefficientValues[i] * variableValues[i]);
 			}
 			return result;
 		}
@@ -116,15 +116,14 @@ public class LinearEquation
 			{
 				j = allVariableValues.length;
 			}
-			for(int i = 0; i < j; i++)
+			for(int i = 1; i < j; i++)
 			{
 				variableValues[i] = allVariableValues[i];
 			}
 			
-			result += coefficientValues[0];
 			for(int i = 0; i < variableValues.length; i++)
 			{
-				result += (coefficientValues[i+1] * variableValues[i]);
+				result += (coefficientValues[i] * variableValues[i]);
 			}
 			return result;
 		}
@@ -152,7 +151,7 @@ public class LinearEquation
 			{
 				j = allVariableValues.length;
 			}
-			for(int i = 0; i < j; i++)
+			for(int i = 1; i < j; i++)
 			{
 				variableValues[i] = allVariableValues[i];
 			}
@@ -167,10 +166,9 @@ public class LinearEquation
 				coefficientValues[i] = coEffValues[i];
 			}
 			
-			result += coefficientValues[0];
 			for(int i = 0; i < variableValues.length; i++)
 			{
-				result += (coefficientValues[i+1] * variableValues[i]);
+				result += (coefficientValues[i] * variableValues[i]);
 			}
 			return result;
 		}
