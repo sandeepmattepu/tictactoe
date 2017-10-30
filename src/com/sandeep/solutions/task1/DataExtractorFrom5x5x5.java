@@ -10,7 +10,9 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  * 1) Number of free entire sections in x direction <br />
  * 2) Number of free entire sections in y direction <br />
  * 3) Number of free entire sections in z direction <br />
- * 4) 
+ * 4) Number of free entire diagonal sections in xy direction <br />
+ * 5) Number of free entire diagonal sections in yz direction <br />
+ * 6) Number of free entire diagonal sections in xz direction <br />
  * */
 public class DataExtractorFrom5x5x5
 {
@@ -31,7 +33,7 @@ public class DataExtractorFrom5x5x5
 	/**
 	 * @param dimension 1 for x, 2 for y, 3 for z 
 	 * */
-	private int numberOfFreeEntireSection(IBoard board, int dimension)
+	private int numberOfFreeEntireSectionInOneDirection(IBoard board, int dimension)
 	{
 		int[] somePos;
 		int result = 0;
@@ -73,6 +75,87 @@ public class DataExtractorFrom5x5x5
 		
 		return result;
 	}
+
+	/**
+	 * @param exceptDimension 1 for diagonals in yz direction <br />
+	 * 2 for diagonals in xz direction <br />
+	 * 3 for diagonals in xy direction 
+	 * */
+	private int numberOfFreeEntireSectionInTwoDirection(IBoard board, int exceptDimension)	// Diagonally in 2d
+	{
+		int result = 0;
+		int[] somePos;
+		int j = 0;
+		int k = 0;
+		IPlayer somePlayer;
+		for(int i = 0; i < 5; i++)		// Logic for one diagonal
+		{
+			for(j = 0, k = 0; j < 5; j++, k++)
+			{
+				if(exceptDimension == 1)		// Diagonal in yz direction
+				{
+					somePos = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)		// Diagonal in xz direction
+				{
+					somePos = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)		// Diagonal in xy direction
+				{
+					somePos = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					break;
+				}
+				else if(j == 4)
+				{
+					result++;
+				}
+			}
+		}
+		
+		j = 4;
+		k = 0;
+		for(int i = 0; i < 5; i++)		// Logic for second diagonal
+		{
+			for(j = 4, k = 0; k < 5; j--, k++)
+			{
+				if(exceptDimension == 1)		// Diagonal in yz direction
+				{
+					somePos = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)		// Diagonal in xz direction
+				{
+					somePos = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)		// Diagonal in xy direction
+				{
+					somePos = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					break;
+				}
+				else if(k == 4)
+				{
+					result++;
+				}
+			}
+		}
+		
+		return result;
+	}
 	
 	/**
 	 * This function gives data about number of entire free sections in X direction
@@ -89,7 +172,7 @@ public class DataExtractorFrom5x5x5
 		}
 		else
 		{
-			return numberOfFreeEntireSection(board,1);
+			return numberOfFreeEntireSectionInOneDirection(board,1);
 		}
 	}
 	
@@ -108,7 +191,7 @@ public class DataExtractorFrom5x5x5
 		}
 		else
 		{
-			return numberOfFreeEntireSection(board,2);
+			return numberOfFreeEntireSectionInOneDirection(board,2);
 		}
 	}
 	
@@ -127,7 +210,64 @@ public class DataExtractorFrom5x5x5
 		}
 		else
 		{
-			return numberOfFreeEntireSection(board,3);
+			return numberOfFreeEntireSectionInOneDirection(board,3);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of diagonally free sections in XY direction
+	 * @param board Enter the board to analyze
+	 * @return Number of free diagonal sections available in XY direction
+	 * @throws NonCompatibleBoardException When other board whose dimension is not
+	 *  3 and size is not 5 will make function throw exception
+	 * */
+	public int numberOfEntireDiagonalSectionFreeInXY(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getSize() != 5)
+		{
+			throw exception;
+		}
+		else
+		{
+			return numberOfFreeEntireSectionInTwoDirection(board,3);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of diagonally free sections in YZ direction
+	 * @param board Enter the board to analyze
+	 * @return Number of free diagonal sections available in YZ direction
+	 * @throws NonCompatibleBoardException When other board whose dimension is not
+	 *  3 and size is not 5 will make function throw exception
+	 * */
+	public int numberOfEntireDiagonalSectionFreeInYZ(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getSize() != 5)
+		{
+			throw exception;
+		}
+		else
+		{
+			return numberOfFreeEntireSectionInTwoDirection(board,1);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of diagonally free sections in XZ direction
+	 * @param board Enter the board to analyze
+	 * @return Number of free diagonal sections available in XZ direction
+	 * @throws NonCompatibleBoardException When other board whose dimension is not
+	 *  3 and size is not 5 will make function throw exception
+	 * */
+	public int numberOfEntireDiagonalSectionFreeInXZ(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getSize() != 5)
+		{
+			throw exception;
+		}
+		else
+		{
+			return numberOfFreeEntireSectionInTwoDirection(board,2);
 		}
 	}
 }
