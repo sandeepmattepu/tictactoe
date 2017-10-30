@@ -13,6 +13,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  * 4) Number of free entire diagonal sections in xy direction <br />
  * 5) Number of free entire diagonal sections in yz direction <br />
  * 6) Number of free entire diagonal sections in xz direction <br />
+ * 7) Number of free entire diagonal sections in xyz direction <br />
  * */
 public class DataExtractorFrom5x5x5
 {
@@ -155,6 +156,56 @@ public class DataExtractorFrom5x5x5
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * This function gives data about number of diagonally free sections in XYZ direction
+	 * @param board Enter the board to analyze
+	 * @return Number of free diagonal sections available in XYZ direction
+	 * @throws NonCompatibleBoardException When other board whose dimension is not
+	 *  3 and size is not 5 will make function throw exception
+	 * */
+	public int numberOfEntireDiagonalSectionFreeInXYZ(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getSize() != 5)
+		{
+			throw exception;
+		}
+		else
+		{
+			int result = 0;
+			int[] somePos;
+			IPlayer somePlayer;
+			for(int i=0, j=0, k=0; i < 5; i++, j++, k++)		// For first diagonal
+			{
+				somePos = new int[] {i,j,k};
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					break;
+				}
+				else if( i == 4)
+				{
+					result++;
+				}
+			}
+			
+			for(int i=4,j=0,k=4; j < 5; i--, j++, k--)		// For second diagonal
+			{
+				somePos = new int[] {i,j,k};
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					break;
+				}
+				else if(j == 4)
+				{
+					result++;
+				}
+			}
+
+			return result;
+		}
 	}
 	
 	/**
