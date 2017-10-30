@@ -13,10 +13,29 @@ public class LinearEquation
 	 * Creates an instance of linear equation
 	 * @param numberOfVariables Enter the number of variable function.
 	 * For example : w0 + (w1 x X1) here value is 1
+	 * @return Creates linear equation with all co-efficients as 0
 	 * */
 	public LinearEquation(int numberOfVariables)
 	{
 		coefficientValues = new float[numberOfVariables + 1];
+		variableValues = new float[numberOfVariables + 1];
+		variableValues[0] = 1;
+	}
+	
+	/**
+	 * Creates an instance of linear equation
+	 * @param numberOfVariables Enter the number of variable function.
+	 * For example : w0 + (w1 x X1) here value is 1
+	 * @param defaultValue This will be the value of the all the coefficients
+	 * @return Creates linear equation with all co-efficients as "defaultValue"
+	 * */
+	public LinearEquation(int numberOfVariables, float defaultValue)
+	{
+		coefficientValues = new float[numberOfVariables + 1];
+		for(int i = 0; i < coefficientValues.length; i++)
+		{
+			coefficientValues[i] = defaultValue;
+		}
 		variableValues = new float[numberOfVariables + 1];
 		variableValues[0] = 1;
 	}
