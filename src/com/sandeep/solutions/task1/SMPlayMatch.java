@@ -20,9 +20,9 @@ public class SMPlayMatch
 		// + w2*numbr_vertically_free + w3*number_horizonttal_our + w4*number_vertical_our
 		// w5*number_horizonttal_enemy + w6*number_vertical_enemy + w7 * diagnonally aligned ours +
 		// w8*diagonally aligned enemy
-		IBoard simpleGame = new Board3D(3);
+		IBoard simpleGame = new Board3D(4);
 		IPlayer myself = new TestPlayer();
-		IPlayer randomPlayer = new TestPlayer();
+		IPlayer randomPlayer = new KeyboardPlayer();
 		Match match = new Match(simpleGame,myself,randomPlayer);
 		match.play();
 		

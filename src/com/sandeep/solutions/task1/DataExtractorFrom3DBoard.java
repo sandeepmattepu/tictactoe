@@ -18,6 +18,9 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  *  or equal to half in y direction <br />
  * 10) Number of sections which are filled with our player's more than
  *  or equal to half in z direction <br />
+ *  11) Number of diagonal sections which are filled by our player's more than or equal to half in xy direction <br />
+ *  12) Number of diagonal sections which are filled by our player's more than or equal to half in yz direction <br />
+ *  13) Number of diagonal sections which are filled by our player's more than or equal to half in xz direction <br />
  * */
 public class DataExtractorFrom3DBoard
 {
@@ -441,6 +444,175 @@ public class DataExtractorFrom3DBoard
 		else
 		{
 			return numberOfSectionsMoreThanHalfFilledInOneDirection(board,3);
+		}
+	}
+	
+	/**
+	 * @param exceptDimension 1 for diagonals in yz direction <br />
+	 * 2 for diagonals in xz direction <br />
+	 * 3 for diagonals in xy direction <br />
+	 * */
+	private int diagonalsFilledMoreHalfByOurPlayerInTwoDirection(IBoard board, int exceptDimension)
+	{
+		int result = 0;
+		int[] somePos;
+		int j = 0;
+		int k = 0;
+		IPlayer somePlayer;
+		for(int i = 0; i < board.getSize(); i++)		// Logic for one diagonal
+		{
+			int assignedSpaces = 0;
+			for(j = 0, k = 0; j < board.getSize(); j++, k++)
+			{
+				if(exceptDimension == 1)		// Diagonal in yz direction
+				{
+					somePos = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)		// Diagonal in xz direction
+				{
+					somePos = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)		// Diagonal in xy direction
+				{
+					somePos = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					if(somePlayer != player)
+					{
+						break;
+					}
+					else
+					{
+						assignedSpaces ++;
+					}
+				}
+				
+				if(j == (board.getSize() - 1))
+				{
+					int halfSpaces = board.getSize()/2;
+					if(assignedSpaces >= halfSpaces)
+					{
+						result ++;
+					}
+				}
+			}
+		}
+		
+		j = (board.getSize() - 1);
+		k = 0;
+		for(int i = 0; i < board.getSize(); i++)		// Logic for second diagonal
+		{
+			int assignedSpaces = 0;
+			for(j = (board.getSize() - 1), k = 0; k < board.getSize(); j--, k++)
+			{
+				if(exceptDimension == 1)		// Diagonal in yz direction
+				{
+					somePos = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)		// Diagonal in xz direction
+				{
+					somePos = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)		// Diagonal in xy direction
+				{
+					somePos = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					if(somePlayer != player)
+					{
+						break;
+					}
+					else
+					{
+						assignedSpaces ++;
+					}
+				}
+				
+				if(k == (board.getSize() - 1))
+				{
+					int half = board.getSize() / 2;
+					if(assignedSpaces >= half)
+					{
+						result++;
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * This function gives data about number of diagonals that filled with our player's with more than half
+	 * in XY direction.<br />
+	 * For example: If we are player 1 then |1|1| | will be counted but not |1|1|2|. Also | | | | is also 
+	 * not counted
+	 * @param board Enter the board to analyze
+	 * @return Number of sections that are filled more than or equal to half diagonally in XY
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int numberOfDiagonalsOurFilledMoreThanHalfInXY(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			return diagonalsFilledMoreHalfByOurPlayerInTwoDirection(board, 3);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of diagonals that filled with our player's with more than half
+	 * in YZ direction.<br />
+	 * For example: If we are player 1 then |1|1| | will be counted but not |1|1|2|. Also | | | | is also 
+	 * not counted
+	 * @param board Enter the board to analyze
+	 * @return Number of sections that are filled more than or equal to half diagonally in YZ
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int numberOfDiagonalsOurFilledMoreThanHalfInYZ(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			return diagonalsFilledMoreHalfByOurPlayerInTwoDirection(board, 1);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of diagonals that filled with our player's with more than half
+	 * in XZ direction.<br />
+	 * For example: If we are player 1 then |1|1| | will be counted but not |1|1|2|. Also | | | | is also 
+	 * not counted
+	 * @param board Enter the board to analyze
+	 * @return Number of sections that are filled more than or equal to half diagonally in XZ
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int numberOfDiagonalsOurFilledMoreThanHalfInXZ(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			return diagonalsFilledMoreHalfByOurPlayerInTwoDirection(board, 2);
 		}
 	}
 }
