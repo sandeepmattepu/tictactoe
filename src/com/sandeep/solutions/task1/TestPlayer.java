@@ -14,9 +14,7 @@ public class TestPlayer extends KeyboardPlayer
 			dataExtractor = new DataExtractorFrom3DBoard(this);
 		}
 		try {
-			System.out.println("Favourable in xy diagonal " + dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInXY(board));
-			System.out.println("Favourable in yz diagonal " + dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInYZ(board));
-			System.out.println("Favourable in xz diagonal " + dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInXZ(board));
+			System.out.println("Favourable in xyz diagonal " + dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInXYZ(board));
 		} catch (NonCompatibleBoardException e) {
 			// TODO Auto-generated catc
 		}

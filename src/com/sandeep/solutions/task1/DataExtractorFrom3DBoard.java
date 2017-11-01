@@ -21,6 +21,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  *  11) Number of diagonal sections which are filled by our player's more than or equal to half in xy direction <br />
  *  12) Number of diagonal sections which are filled by our player's more than or equal to half in yz direction <br />
  *  13) Number of diagonal sections which are filled by our player's more than or equal to half in xz direction <br />
+ *  14) Number of diagonal sections which are filled by our player's more than or equal to half in xyz direction <br />
  * */
 public class DataExtractorFrom3DBoard
 {
@@ -613,6 +614,83 @@ public class DataExtractorFrom3DBoard
 		else
 		{
 			return diagonalsFilledMoreHalfByOurPlayerInTwoDirection(board, 2);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of diagonals that filled with our player's with more than half
+	 * in XYZ direction.<br />
+	 * For example: If we are player 1 then |1|1| | will be counted but not |1|1|2|. Also | | | | is also 
+	 * not counted
+	 * @param board Enter the board to analyze
+	 * @return Number of sections that are filled more than or equal to half diagonally in XYZ
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int numberOfDiagonalsOurFilledMoreThanHalfInXYZ(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			int result = 0;
+			int[] somePos;
+			IPlayer somePlayer;
+			int assignedSpaces = 0;
+			for(int i=0, j=0, k=0; i < board.getSize(); i++, j++, k++)		// For first diagonal
+			{
+				somePos = new int[] {i,j,k};
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					if(somePlayer != player)
+					{
+						break;
+					}
+					else
+					{
+						assignedSpaces ++;
+					}
+				}
+				
+				if(i == (board.getSize() - 1))
+				{
+					int half = board.getSize()/2;
+					if(assignedSpaces >= half)
+					{
+						result++;
+					}
+				}
+			}
+			assignedSpaces = 0;
+			for(int i=(board.getSize() - 1),j=0,k=(board.getSize() - 1); j < board.getSize(); i--, j++, k--)		// For second diagonal
+			{
+				somePos = new int[] {i,j,k};
+				somePlayer = board.getFieldValue(somePos);
+				if(somePlayer != null)
+				{
+					if(somePlayer != player)
+					{
+						break;
+					}
+					else
+					{
+						assignedSpaces ++;
+					}
+				}
+				
+				if(j == (board.getSize() - 1))
+				{
+					int half = board.getSize()/2;
+					if(assignedSpaces >= half)
+					{
+						result++;
+					}
+				}
+			}
+			
+			return result;
 		}
 	}
 }
