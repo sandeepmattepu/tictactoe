@@ -1,4 +1,4 @@
-package com.sandeep.exceptions;
+package com.sandeep.solutions.task1;
 
 @SuppressWarnings("serial")
 public class NonCompatibleBoardException extends Exception

@@ -1,8 +1,6 @@
 package com.sandeep.solutions.task1;
 
 
-import com.sandeep.machine.learning.lms.LinearEquation;
-
 import de.ovgu.dke.teaching.ml.tictactoe.PlayMatch;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IBoard;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IMove;

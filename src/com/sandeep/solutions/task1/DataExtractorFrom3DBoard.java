@@ -1,7 +1,5 @@
 package com.sandeep.solutions.task1;
 
-import com.sandeep.exceptions.NonCompatibleBoardException;
-
 import de.ovgu.dke.teaching.ml.tictactoe.api.IBoard;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
 

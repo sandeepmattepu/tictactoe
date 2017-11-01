@@ -1,4 +1,4 @@
-package com.sandeep.machine.learning.lms;
+package com.sandeep.solutions.task1;
 
 /**
  * This class acts as linear equation which has co-efficient and variable.
@@ -78,7 +78,7 @@ public class LinearEquation
 	
 	/**
 	 * This function return all values of the coefficients
-	 * @return Returns {@link com.sandeep.machine.learning.lms.LinearEquation#coefficientValues}
+	 * @return Returns {@link com.sandeep.solutions.task1.LinearEquation#coefficientValues}
 	 * */
 	public float[] getAllCoefficients()
 	{
