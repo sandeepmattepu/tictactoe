@@ -693,4 +693,129 @@ public class DataExtractorFrom3DBoard
 			return result;
 		}
 	}
+	
+	/**
+	 * @param dimension Enter 1 for x, 2 for y, 3 for z
+	 * */
+	private int numberOfSectionsMoreThanHalfFilledByEnemyInOneDirection(IBoard board, int dimension)
+	{
+		int result = 0;
+		int[] somePos;
+		IPlayer somePlayer;
+		for(int i = 0; i<board.getSize(); i++)
+		{
+			for(int j = 0; j < board.getSize(); j++)
+			{
+				int assignedSpaces = 0;
+				for(int k = 0; k < board.getSize(); k++)
+				{
+					if(dimension == 1)
+					{
+						somePos = new int[] {k,i,j};
+					}
+					else if(dimension == 2)
+					{
+						somePos = new int[] {i,k,j};
+					}
+					else if(dimension == 3)
+					{
+						somePos = new int[] {i,j,k};
+					}
+					else
+					{
+						return 0;
+					}
+					somePlayer = board.getFieldValue(somePos);
+					if(somePlayer != null)
+					{
+						if(somePlayer == player)
+						{
+							break;		// That section is already filled with some of our player's places
+						}
+						else
+						{
+							assignedSpaces ++;
+						}
+					}
+					
+					if(assignedSpaces != 0)		// At least one of our opponent's position
+						//should be there in section
+					{
+						int halfOfSpaces = board.getSize() / 2;
+						if(assignedSpaces >= halfOfSpaces && (k == (board.getSize() - 1)))
+						{
+							result++;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * This function gives data about number of sections that are filled more than or equal to half
+	 * by only opponent's in X direction. 
+	 * For example: If opponent is 1 then |1|1| | will be counted but not |1|1|2|. Also | | | | is also 
+	 * not counted
+	 * @param board Enter the board to analyze
+	 * @return Number of sections that are filled more than or equal to half
+	 * by only opponent in X direction
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int numberOfSectionHalfFilledInXByOpponent(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			return numberOfSectionsMoreThanHalfFilledByEnemyInOneDirection(board,1);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of sections that are filled more than or equal to half
+	 * by only opponent's in Y direction. 
+	 * For example: If opponent is 1 then |1|1| | will be counted but not |1|1|2|. Also | | | | is also 
+	 * not counted
+	 * @param board Enter the board to analyze
+	 * @return Number of sections that are filled more than or equal to half
+	 * by only opponent in Y direction
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int numberOfSectionHalfFilledInYByOpponent(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			return numberOfSectionsMoreThanHalfFilledByEnemyInOneDirection(board,2);
+		}
+	}
+	
+	/**
+	 * This function gives data about number of sections that are filled more than or equal to half
+	 * by only opponent's in Z direction. 
+	 * For example: If opponent is 1 then |1|1| | will be counted but not |1|1|2|. Also | | | | is also 
+	 * not counted
+	 * @param board Enter the board to analyze
+	 * @return Number of sections that are filled more than or equal to half
+	 * by only opponent in Z direction
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int numberOfSectionHalfFilledInZByOpponent(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			return numberOfSectionsMoreThanHalfFilledByEnemyInOneDirection(board,3);
+		}
+	}
 }
