@@ -15,7 +15,7 @@ public class SolutionLearningPlayer implements IPlayer
 	private List<IBoard> historyOfBoards = new ArrayList<IBoard>();
 	private List<int[]> allLegalMoves = new ArrayList<int[]>();
 	private List<IBoard> allPossibleBoardsAfterLegalMove = new ArrayList<IBoard>();
-	private int[] oldWeights = new int[21];
+	private double[] oldWeights = approximatedTargetFunction.getAllCoefficients();
 	
 	public int[] makeMove(IBoard board)
 	{
@@ -91,7 +91,7 @@ public class SolutionLearningPlayer implements IPlayer
 
 	private IMove determineBestPossibleMove()
 	{
-		float bestRankOfBoard = 0;
+		double bestRankOfBoard = 0;
 		int indexOfBestRankBoard = 0;
 		for(int i = 0; i < allPossibleBoardsAfterLegalMove.size(); i++)
 		{
@@ -102,7 +102,7 @@ public class SolutionLearningPlayer implements IPlayer
 			}
 			else
 			{
-				float valueOfBoard = valueOfBoardFromAppFunction(allPossibleBoardsAfterLegalMove.get(i));
+				double valueOfBoard = valueOfBoardFromAppFunction(allPossibleBoardsAfterLegalMove.get(i));
 				if(valueOfBoard > bestRankOfBoard)
 				{
 					bestRankOfBoard = valueOfBoard;
@@ -117,10 +117,10 @@ public class SolutionLearningPlayer implements IPlayer
 		return bestPossibleMove;
 	}
 	
-	private float valueOfBoardFromAppFunction(IBoard boardToCalculate)
+	private double valueOfBoardFromAppFunction(IBoard boardToCalculate)
 	{
 		DataExtractorFrom3DBoard dataExtractor = new DataExtractorFrom3DBoard(this);
-		float result = 0.0f;
+		double result = 0.0f;
 		int[] variableValues = new int[21];
 		try 
 		{
@@ -160,7 +160,7 @@ public class SolutionLearningPlayer implements IPlayer
 	{
 		if(finalStateOfBoard.isFinalState())
 		{
-			float trainingExampleScore = 0;
+			double trainingExampleScore = 0;
 			float learningRate = 0.01f;
 			IPlayer winner = finalStateOfBoard.getWinner();
 			if(winner == null)		// Draw match
@@ -186,13 +186,13 @@ public class SolutionLearningPlayer implements IPlayer
 		}
 	}
 	
-	private void adjustWeightsOfApproxTargetFunction(float trainingExampleScore, IBoard boardToAnalyze,
+	private void adjustWeightsOfApproxTargetFunction(double trainingExampleScore, IBoard boardToAnalyze,
 			float learningRate)
 	{
-		float scoreOfBoardFromEquation = valueOfBoardFromAppFunction(boardToAnalyze);
+		double scoreOfBoardFromEquation = valueOfBoardFromAppFunction(boardToAnalyze);
 		for(int i = 0; i <= approximatedTargetFunction.degreeOfEquation(); i++)
 		{
-			float newWeight = approximatedTargetFunction.getCoefficientAt(i) + (learningRate * (trainingExampleScore
+			double newWeight = approximatedTargetFunction.getCoefficientAt(i) + (learningRate * (trainingExampleScore
 					- scoreOfBoardFromEquation) * approximatedTargetFunction.getVariableValueAt(i));
 			approximatedTargetFunction.setCoefficientAt(i, newWeight);
 		}

@@ -6,7 +6,7 @@ package com.sandeep.solutions.task1;
  * */
 public class LinearEquation 
 {
-	private float[] coefficientValues;
+	private double[] coefficientValues;
 	private int[] variableValues;
 	
 	/**
@@ -17,7 +17,7 @@ public class LinearEquation
 	 * */
 	public LinearEquation(int numberOfVariables)
 	{
-		coefficientValues = new float[numberOfVariables + 1];
+		coefficientValues = new double[numberOfVariables + 1];
 		variableValues = new int[numberOfVariables + 1];
 		variableValues[0] = 1;
 	}
@@ -29,9 +29,9 @@ public class LinearEquation
 	 * @param defaultValue This will be the value of the all the coefficients
 	 * @return Creates linear equation with all co-efficients as "defaultValue"
 	 * */
-	public LinearEquation(int numberOfVariables, float defaultValue)
+	public LinearEquation(int numberOfVariables, double defaultValue)
 	{
-		coefficientValues = new float[numberOfVariables + 1];
+		coefficientValues = new double[numberOfVariables + 1];
 		for(int i = 0; i < coefficientValues.length; i++)
 		{
 			coefficientValues[i] = defaultValue;
@@ -45,7 +45,7 @@ public class LinearEquation
 	 * @param at Enter number as index value similar to arrays
 	 * @return Co-efficient value at the "at" index
 	 * */
-	public float getCoefficientAt(int at)
+	public double getCoefficientAt(int at)
 	{
 		if(at < 0)
 		{
@@ -66,7 +66,7 @@ public class LinearEquation
 	 * @param at Enter number as index value similar to arrays
 	 * @return Variable value at the "at" index
 	 * */
-	public float getVariableValueAt(int at)
+	public int getVariableValueAt(int at)
 	{
 		if(at < 0)
 		{
@@ -87,7 +87,7 @@ public class LinearEquation
 	 * @param at Enter number as index value similar to arrays
 	 * @param as Enter coefficient value to be assigned
 	 * */
-	public void setCoefficientAt(int at, float as)
+	public void setCoefficientAt(int at, double as)
 	{
 		if(at < 0 || at >= coefficientValues.length)
 		{
@@ -101,7 +101,7 @@ public class LinearEquation
 	 * This function return all values of the coefficients
 	 * @return Returns {@link com.sandeep.solutions.task1.LinearEquation#coefficientValues}
 	 * */
-	public float[] getAllCoefficients()
+	public double[] getAllCoefficients()
 	{
 		return coefficientValues;
 	}
@@ -119,9 +119,9 @@ public class LinearEquation
 	 * This function gives total value of the function with values which was there previously in them.
 	 * @return Value of the function.
 	 * */
-	public float valueOfFunction()
+	public double valueOfFunction()
 	{
-		float result = 0;
+		double result = 0;
 		if(variableValues.length == 0)
 		{
 			return result;
@@ -142,9 +142,9 @@ public class LinearEquation
 	 * Example : w0 + (w1 * X1) then send {X1 = 9} array
 	 * @return Value of the function.
 	 * */
-	public float valueOfFunction(int[] allVariableValues)
+	public double valueOfFunction(int[] allVariableValues)
 	{
-		float result = 0;
+		double result = 0;
 		if(variableValues.length == 0)
 		{
 			return result;
@@ -177,9 +177,9 @@ public class LinearEquation
 	 * Example : w0 + (w1 * X1) then send {w0 = 0.34, w1 = 0.645} array.
 	 * @return Value of the function.
 	 * */
-	public float valueOfFunction(int[] allVariableValues, float[] coEffValues)
+	public double valueOfFunction(int[] allVariableValues, float[] coEffValues)
 	{
-		float result = 0;
+		double result = 0;
 		if(variableValues.length == 0)
 		{
 			return result;
