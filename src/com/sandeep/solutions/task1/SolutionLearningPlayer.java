@@ -8,14 +8,14 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IMove;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IllegalMoveException;
 import de.ovgu.dke.teaching.ml.tictactoe.game.Move;
-import de.ovgu.dke.teaching.ml.tictactoe.player.RandomPlayer;
 
-public class TestPlayer extends RandomPlayer 
+public class SolutionLearningPlayer implements IPlayer 
 {
 	private LinearEquation approximatedTargetFunction = new LinearEquation(21, 1);
 	private List<IBoard> historyOfBoards = new ArrayList<IBoard>();
 	private List<int[]> allLegalMoves = new ArrayList<int[]>();
 	private List<IBoard> allPossibleBoardsAfterLegalMove = new ArrayList<IBoard>();
+	private int[] oldWeights = new int[21];
 	
 	public int[] makeMove(IBoard board)
 	{
@@ -29,6 +29,7 @@ public class TestPlayer extends RandomPlayer
 	public void onMatchEnds(IBoard board)
 	{
 		applyLMSAlgorithm(board);
+		displayResults();
 	}
 	
 	private boolean isLegalMove(int[] movePosition, IBoard boardToAnalyze)
@@ -194,6 +195,21 @@ public class TestPlayer extends RandomPlayer
 			float newWeight = approximatedTargetFunction.getCoefficientAt(i) + (learningRate * (trainingExampleScore
 					- scoreOfBoardFromEquation) * approximatedTargetFunction.getVariableValueAt(i));
 			approximatedTargetFunction.setCoefficientAt(i, newWeight);
+		}
+	}
+	
+	private void displayResults()
+	{
+		System.out.println("Old Values:");
+		for(int i = 0; i < oldWeights.length; i++)
+		{
+			System.out.println("w" + i + " : " + oldWeights[i]);
+		}
+		System.out.println();
+		System.out.println("New Values:");
+		for(int i = 0; i < (approximatedTargetFunction.degreeOfEquation() + 1); i++)
+		{
+			System.out.println("w" + i + " : " + approximatedTargetFunction.getCoefficientAt(i));
 		}
 	}
 }
