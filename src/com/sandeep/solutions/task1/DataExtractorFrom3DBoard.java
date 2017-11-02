@@ -28,6 +28,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  *  18) Number of diagonals which are half or more by opponent in XY direction <br />
  *  19) Number of diagonals which are half or more by opponent in XZ direction <br />
  *  20) Number of diagonals which are half or more by opponent in YZ direction <br />
+ *  21) Number of diagonals which are half or more by opponent in XYZ direction.
  * */
 public class DataExtractorFrom3DBoard
 {
