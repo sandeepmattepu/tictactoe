@@ -22,7 +22,7 @@ public class SMPlayMatch
 		// w8*diagonally aligned enemy
 		IBoard simpleGame = new Board3D(4);
 		IPlayer myself = new TestPlayer();
-		IPlayer randomPlayer = new KeyboardPlayer();
+		IPlayer randomPlayer = new RandomPlayer();
 		Match match = new Match(simpleGame,myself,randomPlayer);
 		match.play();
 		

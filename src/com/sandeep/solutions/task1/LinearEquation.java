@@ -7,7 +7,7 @@ package com.sandeep.solutions.task1;
 public class LinearEquation 
 {
 	private float[] coefficientValues;
-	private float[] variableValues;
+	private int[] variableValues;
 	
 	/**
 	 * Creates an instance of linear equation
@@ -18,7 +18,7 @@ public class LinearEquation
 	public LinearEquation(int numberOfVariables)
 	{
 		coefficientValues = new float[numberOfVariables + 1];
-		variableValues = new float[numberOfVariables + 1];
+		variableValues = new int[numberOfVariables + 1];
 		variableValues[0] = 1;
 	}
 	
@@ -36,7 +36,7 @@ public class LinearEquation
 		{
 			coefficientValues[i] = defaultValue;
 		}
-		variableValues = new float[numberOfVariables + 1];
+		variableValues = new int[numberOfVariables + 1];
 		variableValues[0] = 1;
 	}
 	
@@ -121,7 +121,7 @@ public class LinearEquation
 	 * Example : w0 + (w1 * X1) then send {X1 = 9} array
 	 * @return Value of the function.
 	 * */
-	public float valueOfFunction(float[] allVariableValues)
+	public float valueOfFunction(int[] allVariableValues)
 	{
 		float result = 0;
 		if(variableValues.length == 0)
@@ -156,7 +156,7 @@ public class LinearEquation
 	 * Example : w0 + (w1 * X1) then send {w0 = 0.34, w1 = 0.645} array.
 	 * @return Value of the function.
 	 * */
-	public float valueOfFunction(float[] allVariableValues, float[] coEffValues)
+	public float valueOfFunction(int[] allVariableValues, float[] coEffValues)
 	{
 		float result = 0;
 		if(variableValues.length == 0)
