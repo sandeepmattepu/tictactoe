@@ -8,9 +8,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IMove;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IllegalMoveException;
 import de.ovgu.dke.teaching.ml.tictactoe.game.Move;
-import de.ovgu.dke.teaching.ml.tictactoe.player.KeyboardPlayer;
 import de.ovgu.dke.teaching.ml.tictactoe.player.RandomPlayer;
-import de.ovgu.dke.teaching.ml.tictactoe.player.SmartPlayer;
 
 public class TestPlayer extends RandomPlayer 
 {
@@ -30,7 +28,7 @@ public class TestPlayer extends RandomPlayer
 	
 	public void onMatchEnds(IBoard board)
 	{
-		System.out.println("Boards with me " + historyOfBoards.size());
+		applyLMSAlgorithm(board);
 	}
 	
 	private boolean isLegalMove(int[] movePosition, IBoard boardToAnalyze)
@@ -92,7 +90,6 @@ public class TestPlayer extends RandomPlayer
 
 	private IMove determineBestPossibleMove()
 	{
-		int[] variablesValues;
 		float bestRankOfBoard = 0;
 		int indexOfBestRankBoard = 0;
 		for(int i = 0; i < allPossibleBoardsAfterLegalMove.size(); i++)
@@ -156,5 +153,47 @@ public class TestPlayer extends RandomPlayer
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	private void applyLMSAlgorithm(IBoard finalStateOfBoard) 
+	{
+		if(finalStateOfBoard.isFinalState())
+		{
+			float trainingExampleScore = 0;
+			float learningRate = 0.01f;
+			IPlayer winner = finalStateOfBoard.getWinner();
+			if(winner == null)		// Draw match
+			{
+				trainingExampleScore = 0;
+			}
+			else if(winner == this)		// Won
+			{
+				trainingExampleScore = 100;
+			}
+			else							// Lost
+			{
+				trainingExampleScore = -100;
+			}
+			
+			for(int i = 0; i < historyOfBoards.size(); i++)
+			{
+				adjustWeightsOfApproxTargetFunction(trainingExampleScore, historyOfBoards.get(i),
+						learningRate);
+				trainingExampleScore = valueOfBoardFromAppFunction(historyOfBoards.get(i));		// For training 
+				// next board
+			}
+		}
+	}
+	
+	private void adjustWeightsOfApproxTargetFunction(float trainingExampleScore, IBoard boardToAnalyze,
+			float learningRate)
+	{
+		float scoreOfBoardFromEquation = valueOfBoardFromAppFunction(boardToAnalyze);
+		for(int i = 0; i <= approximatedTargetFunction.degreeOfEquation(); i++)
+		{
+			float newWeight = approximatedTargetFunction.getCoefficientAt(i) + (learningRate * (trainingExampleScore
+					- scoreOfBoardFromEquation) * approximatedTargetFunction.getVariableValueAt(i));
+			approximatedTargetFunction.setCoefficientAt(i, newWeight);
+		}
 	}
 }

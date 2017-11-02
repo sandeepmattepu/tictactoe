@@ -62,6 +62,27 @@ public class LinearEquation
 	}
 	
 	/**
+	 * This function helps us to access individual values
+	 * @param at Enter number as index value similar to arrays
+	 * @return Variable value at the "at" index
+	 * */
+	public float getVariableValueAt(int at)
+	{
+		if(at < 0)
+		{
+			return variableValues[0];
+		}
+		else if(at >= variableValues.length)
+		{
+			return variableValues[variableValues.length - 1];
+		}
+		else
+		{
+			return variableValues[at];
+		}
+	}
+	
+	/**
 	 * This function helps us to set individual coefficients
 	 * @param at Enter number as index value similar to arrays
 	 * @param as Enter coefficient value to be assigned
