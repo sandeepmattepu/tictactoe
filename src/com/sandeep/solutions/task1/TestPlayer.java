@@ -14,11 +14,10 @@ public class TestPlayer extends KeyboardPlayer
 			dataExtractor = new DataExtractorFrom3DBoard(this);
 		}
 		try {
-			System.out.println("Favourable enemy xy diagonal " + dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInXY(board));
-			System.out.println("Favourible enemy xz diagonal " + dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInXZ(board));
-			System.out.println("Fouvarable in yz enemy " +dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInYZ(board));
+			System.out.println("Favourable enemy xyz diagonal " + 
+		dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInXYZ(board));
 		} catch (NonCompatibleBoardException e) {
-			// TODO Auto-generated catc
+			// TODO Auto-generated catch
 		}
 		int[] position;
 		position = super.makeMove(board);
