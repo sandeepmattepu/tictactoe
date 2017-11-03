@@ -1623,10 +1623,10 @@ public class DataExtractorFrom3DBoard
 	}
 
 	/**
-	 * This function gives data about total number of sections which are one move away to win.<br />
+	 * This function gives data about total number of sections which are one move away to win our player.<br />
 	 * For example: If board has |1|1| | then it is counted
 	 * @param board Enter the board to analyze
-	 * @return Total number of sections which are one move away to win.
+	 * @return Total number of sections which are one move away to win our player.
 	 * @throws NonCompatibleBoardException When the board is not 3d
 	 * */
 	public int totalNumberSectionsOneMoveAwayForOurWin(IBoard board) throws NonCompatibleBoardException
@@ -1646,6 +1646,244 @@ public class DataExtractorFrom3DBoard
 			result += numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToOurWin(board, 2);
 			result += numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToOurWin(board, 3);
 			result += sectionsOneMoveAwayToOurWinInXYZ(board);
+			return result;
+		}
+	}
+
+	/**
+	 * @param dimension Enter 1 for x, 2 for y, 3 for z
+	 * */
+	private int numberOfSectionsOneMoveAwayToWinOpponentInOneDirection(IBoard board, int dimension)
+	{
+		int result = 0;
+		int[] somePosition = new int[3];
+		IPlayer somePlayer;
+		for(int i = 0; i < board.getSize(); i++)
+		{
+			for(int j = 0; j < board.getSize(); j++)
+			{
+				int numberOfOpponentPlacesOccupied = 0;
+				for(int k = 0; k < board.getSize(); k++)
+				{
+					if(dimension == 1)
+					{
+						somePosition = new int[] {k,i,j};
+					}
+					else if(dimension == 2)
+					{
+						somePosition = new int[] {i,k,j};
+					}
+					else if(dimension == 3)
+					{
+						somePosition = new int[] {i,j,k};
+					}
+					else
+					{
+						return 0;
+					}
+					somePlayer = board.getFieldValue(somePosition);
+					if(somePlayer != null)
+					{
+						if(somePlayer != player)
+						{
+							numberOfOpponentPlacesOccupied++;
+						}
+						else
+						{
+							break;
+						}
+					}
+					if(k == (board.getSize() - 1))
+					{
+						if(numberOfOpponentPlacesOccupied == (board.getSize() - 1))
+						{
+							result++;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @param exceptDimension Enter 1 for diagonals in yz plane.<br />
+	 * Enter 2 for diagonals in xz plane.<br />
+	 * Enter 3 for diagonals in xy plane.<br />
+	 * */
+	private int numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToOpponentWin(IBoard board, int exceptDimension)
+	{
+		int result = 0;
+		int[] somePosition = new int[3];
+		IPlayer somePlayer;
+		for(int i = 0; i < board.getSize(); i++)		// For first diagonal
+		{
+			int numberOfOpponentPlacesOccupied = 0;
+			for(int j =0, k=0; j < board.getSize(); j++, k++)
+			{
+				if(exceptDimension == 1)
+				{
+					somePosition = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)
+				{
+					somePosition = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)
+				{
+					somePosition = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePosition);
+				if(somePlayer != null)
+				{
+					if(somePlayer != player)
+					{
+						numberOfOpponentPlacesOccupied++;
+					}
+					else
+					{
+						break;
+					}
+				}
+				
+				if(j == (board.getSize() - 1))
+				{
+					if(numberOfOpponentPlacesOccupied == (board.getSize() - 1))
+					{
+						result++;
+					}
+				}
+			}
+		}
+		for(int i = 0; i < board.getSize(); i++)			// For second diagonal
+		{
+			int numberOfOpponentPlacesOccupied = 0;
+			for(int j = (board.getSize() - 1), k=0; k < board.getSize(); j--, k++)
+			{
+				if(exceptDimension == 1)
+				{
+					somePosition = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)
+				{
+					somePosition = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)
+				{
+					somePosition = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePosition);
+				if(somePlayer != null)
+				{
+					if(somePlayer != player)
+					{
+						numberOfOpponentPlacesOccupied++;
+					}
+					else
+					{
+						break;
+					}
+				}
+				
+				if(k == (board.getSize() - 1))
+				{
+					if(numberOfOpponentPlacesOccupied == (board.getSize()-1))
+					{
+						result++;
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
+	private int sectionsOneMoveAwayToOpponentWinInXYZ(IBoard board)
+	{
+		int result = 0;
+		int[] somePos = new int[3];
+		IPlayer somePlayer;
+		int numberOfOpponentPlacesOccupied = 0;
+		for(int i = 0, j = 0, k = 0; i < board.getSize(); i++, j++, k++)			// First diagonal
+		{
+			somePos = new int[] {i,j,k};
+			somePlayer = board.getFieldValue(somePos);
+			if(somePlayer != null)
+			{
+				if(somePlayer != player)
+				{
+					numberOfOpponentPlacesOccupied++;
+				}
+				else	
+				{
+					break;
+				}
+			}
+			if(i == (board.getSize() - 1))
+			{
+				if(numberOfOpponentPlacesOccupied == (board.getSize() - 1))
+				{
+					result++;
+				}
+			}
+		}
+		numberOfOpponentPlacesOccupied = 0;
+		for(int i = (board.getSize() - 1), j = 0, k = (board.getSize() - 1); j < board.getSize(); i--,j++,k--)
+		{
+			somePos = new int[] {i,j,k};
+			somePlayer = board.getFieldValue(somePos);
+			if(somePlayer != null)
+			{
+				if(somePlayer != player)
+				{
+					numberOfOpponentPlacesOccupied++;
+				}
+				else	
+				{
+					break;
+				}
+			}
+			if(j == (board.getSize() - 1))
+			{
+				if(numberOfOpponentPlacesOccupied == (board.getSize() - 1))
+				{
+					result++;
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * This function gives data about total number of sections which are one move away to win opponent.<br />
+	 * For example: If board has |1|1| | then it is counted
+	 * @param board Enter the board to analyze
+	 * @return Total number of sections which are one move away to win opponent.
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int totalNumberSectionsOneMoveAwayForOpponentWin(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+			int result = 0;
+			result += numberOfSectionsOneMoveAwayToWinOpponentInOneDirection(board, 1);
+			result += numberOfSectionsOneMoveAwayToWinOpponentInOneDirection(board, 2);
+			result += numberOfSectionsOneMoveAwayToWinOpponentInOneDirection(board, 3);
+			result += numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToOpponentWin(board, 1);
+			result += numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToOpponentWin(board, 2);
+			result += numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToOpponentWin(board, 3);
+			result += sectionsOneMoveAwayToOpponentWinInXYZ(board);
 			return result;
 		}
 	}
