@@ -1323,19 +1323,61 @@ public class DataExtractorFrom3DBoard
 		return result;
 	}
 	
-	public int numberOfSectionsWithMixedPositionsInXYZ(IBoard board)
+	private int numberOfSectionsWithMixedPositionsInXYZDiagonal(IBoard board)
 	{
 		int result = 0;
 		int[] somePos = new int[3];
 		IPlayer somePlayer;
 		int numberOfOurPlacesOccupied = 0;
 		int numberOfOppentPlacesOccupied = 0;
-		for(int i = 0, j = 0, k = 0; i < board.getSize(); i++, j++, k++)
+		for(int i = 0, j = 0, k = 0; i < board.getSize(); i++, j++, k++)			// First diagonal
 		{
-			
+			somePos = new int[] {i,j,k};
+			somePlayer = board.getFieldValue(somePos);
+			if(somePlayer != null)
+			{
+				if(somePlayer == player)
+				{
+					numberOfOurPlacesOccupied++;
+				}
+				else	
+				{
+					numberOfOppentPlacesOccupied++;
+				}
+			}
+			if(i == (board.getSize() - 1))
+			{
+				if(numberOfOppentPlacesOccupied != 0 && numberOfOurPlacesOccupied != 0)
+				{
+					result++;
+				}
+			}
 		}
 		numberOfOurPlacesOccupied = 0;
 		numberOfOppentPlacesOccupied = 0;
+		for(int i = (board.getSize() - 1), j = 0, k = (board.getSize() - 1); j < board.getSize(); i--,j++,k--)
+		{
+			somePos = new int[] {i,j,k};
+			somePlayer = board.getFieldValue(somePos);
+			if(somePlayer != null)
+			{
+				if(somePlayer == player)
+				{
+					numberOfOurPlacesOccupied++;
+				}
+				else	
+				{
+					numberOfOppentPlacesOccupied++;
+				}
+			}
+			if(j == (board.getSize() - 1))
+			{
+				if(numberOfOppentPlacesOccupied != 0 && numberOfOurPlacesOccupied != 0)
+				{
+					result++;
+				}
+			}
+		}
 		return result;
 	}
 }
