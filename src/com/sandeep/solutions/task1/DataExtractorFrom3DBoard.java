@@ -25,7 +25,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  *  13) Number of diagonal sections which are filled by our player's more than or equal to half in yz direction <br />
  *  14) Number of diagonal sections which are filled by our player's more than or equal to half in xz direction <br />
  *  15) Number of diagonal sections which are filled by our player's more than or equal to half in xyz direction <br />
- *  16) Total number of sections which are filled by our player's more than or equal to half<br />.
+ *  16) Total number of sections which are filled by our player's more than or equal to half<br />
  *  17) Number of sections which are half or more filled by opponent in X direction <br />
  *  18) Number of sections which are half or more filled by opponent in Y direction <br />
  *  19) Number of sections which are half or more filled by opponent in Z directions <br />
@@ -1161,5 +1161,84 @@ public class DataExtractorFrom3DBoard
 			result += numberOfDiagonalsOpponentFilledMoreThanHalfInXYZ(board);
 			return result;
 		}
+	}
+	
+	/**
+	 * @param dimension Enter 1 for x direction.<br />
+	 * Enter 2 for y direction.<br />
+	 * Enter 3 for z direction.<br />
+	 * */
+	private int numberOfNonWinnableSectionsInOneDirection(IBoard board, int dimension)
+	{
+		int result = 0;
+		int[] somePosition = new int[3];
+		IPlayer somePlayer;
+		for(int i = 0; i < board.getSize(); i++)
+		{
+			for(int j = 0; j < board.getSize(); j++)
+			{
+				int numberOfOurPlacesOccupied = 0;
+				int numberOfOppentPlacesOccupied = 0;
+				for(int k = 0; k < board.getSize(); k++)
+				{
+					if(dimension == 1)
+					{
+						somePosition = new int[] {k,i,j};
+					}
+					else if(dimension == 2)
+					{
+						somePosition = new int[] {i,k,j};
+					}
+					else if(dimension == 3)
+					{
+						somePosition = new int[] {i,j,k};
+					}
+					else
+					{
+						return 0;
+					}
+					somePlayer = board.getFieldValue(somePosition);
+					if(somePlayer != null)
+					{
+						if(somePlayer == player)
+						{
+							numberOfOurPlacesOccupied++;
+						}
+						else
+						{
+							numberOfOppentPlacesOccupied++;
+						}
+					}
+					if(k == (board.getSize() - 1))
+					{
+						if(numberOfOurPlacesOccupied != 0 && numberOfOppentPlacesOccupied != 0)
+						{
+							result++;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @param exceptDimension Enter 1 for diagonals in yz plane.<br />
+	 * Enter 2 for diagonals in xz plane.<br />
+	 * Enter 3 for diagonals in xy plane.<br />
+	 * */
+	private int numberOfNonWinnableSectionsInDiagonalDirection(IBoard board, int exceptDimension)
+	{
+		int result = 0;
+		int[] somePos = new int[3];
+		IPlayer somePlayer;
+		for(int i = 0; i < board.getSize(); i++)		// For first diagonal
+		{
+			for(int j =0, k=0; j < board.getSize(); j++, k++)
+			{
+				//if()
+			}
+		}
+		return result;
 	}
 }
