@@ -14,6 +14,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  * 5) Number of free entire diagonal sections in yz direction <br />
  * 6) Number of free entire diagonal sections in xz direction <br />
  * 7) Number of free entire diagonal sections in xyz direction <br />
+ * 8) Total number of entire free sections available in board. <br />
  * 8) Number of sections which are filled with our player's more than
  *  or equal to half in x direction <br />
  * 9) Number of sections which are filled with our player's more than
@@ -1070,6 +1071,34 @@ public class DataExtractorFrom3DBoard
 				}
 			}
 			
+			return result;
+		}
+	}
+	
+	/**
+	 * This function gives data about total number of free sections that are available in board.<br />
+	 * For example: If board has | | | | then it is counted
+	 * @param board Enter the board to analyze
+	 * @return Total number of free sections that are available in board.
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int totalNumberOfEntireFreeSectionsInBoard(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+
+			int result = 0;
+			result += numberOfFreeEntireSectionInX(board);
+			result += numberOfFreeEntireSectionInY(board);
+			result += numberOfFreeEntireSectionInZ(board);
+			result += numberOfEntireDiagonalSectionFreeInXY(board);
+			result += numberOfEntireDiagonalSectionFreeInYZ(board);
+			result += numberOfEntireDiagonalSectionFreeInXZ(board);
+			result += numberOfEntireDiagonalSectionFreeInXYZ(board);
 			return result;
 		}
 	}
