@@ -3,6 +3,9 @@ package com.sandeep.solutions.task1;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sandeep.exceptions.NonCompatibleBoardException;
+import com.sandeep.machine_learning.LinearEquation;
+
 import de.ovgu.dke.teaching.ml.tictactoe.api.IBoard;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IMove;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
