@@ -35,7 +35,8 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  *  23) Number of diagonals which are half or more by opponent in XYZ direction. <br />
  *  24) Total number of sections which are filled by opponent's more than or equal to half<br />
  *  25) Total number of sections which are intermixed with our and opponent's places.<br />
- *   
+ *  26) Total number of sections which are one move away from our player win.<br />
+ *  27) Total number of sections which are one move away from opponent win.
  * */
 public class DataExtractorFrom3DBoard
 {
