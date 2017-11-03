@@ -15,16 +15,17 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  * 6) Number of free entire diagonal sections in xz direction <br />
  * 7) Number of free entire diagonal sections in xyz direction <br />
  * 8) Total number of entire free sections available in board. <br />
- * 8) Number of sections which are filled with our player's more than
- *  or equal to half in x direction <br />
  * 9) Number of sections which are filled with our player's more than
- *  or equal to half in y direction <br />
+ *  or equal to half in x direction <br />
  * 10) Number of sections which are filled with our player's more than
+ *  or equal to half in y direction <br />
+ * 11) Number of sections which are filled with our player's more than
  *  or equal to half in z direction <br />
- *  11) Number of diagonal sections which are filled by our player's more than or equal to half in xy direction <br />
- *  12) Number of diagonal sections which are filled by our player's more than or equal to half in yz direction <br />
- *  13) Number of diagonal sections which are filled by our player's more than or equal to half in xz direction <br />
- *  14) Number of diagonal sections which are filled by our player's more than or equal to half in xyz direction <br />
+ *  12) Number of diagonal sections which are filled by our player's more than or equal to half in xy direction <br />
+ *  13) Number of diagonal sections which are filled by our player's more than or equal to half in yz direction <br />
+ *  14) Number of diagonal sections which are filled by our player's more than or equal to half in xz direction <br />
+ *  15) Number of diagonal sections which are filled by our player's more than or equal to half in xyz direction <br />
+ *  16) Total number of sections which are filled by our player's more than or equal to half<br />.
  *  15) Number of sections which are half or more filled by opponent in X direction <br />
  *  16) Number of sections which are half or more filled by opponent in Y direction <br />
  *  17) Number of sections which are half or more filled by opponent in Z directions <br />
@@ -1099,6 +1100,35 @@ public class DataExtractorFrom3DBoard
 			result += numberOfEntireDiagonalSectionFreeInYZ(board);
 			result += numberOfEntireDiagonalSectionFreeInXZ(board);
 			result += numberOfEntireDiagonalSectionFreeInXYZ(board);
+			return result;
+		}
+	}
+	
+	/**
+	 * This function gives data about total number of sections that are half or more filled by our player's
+	 *  in board.<br />
+	 * For example: If board has |1|1| | then it is counted when our player is 1
+	 * @param board Enter the board to analyze
+	 * @return Total number of free sections that are available in board.
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int totalSectionsHalfOrMorePlayerFilledInBoard(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+
+			int result = 0;
+			result += numberOfSectionHalfFilledInX(board);
+			result += numberOfSectionHalfFilledInY(board);
+			result += numberOfSectionHalfFilledInZ(board);
+			result += numberOfDiagonalsOurFilledMoreThanHalfInXY(board);
+			result += numberOfDiagonalsOurFilledMoreThanHalfInYZ(board);
+			result += numberOfDiagonalsOurFilledMoreThanHalfInXZ(board);
+			result += numberOfDiagonalsOurFilledMoreThanHalfInXYZ(board);
 			return result;
 		}
 	}
