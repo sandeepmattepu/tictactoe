@@ -1410,4 +1410,138 @@ public class DataExtractorFrom3DBoard
 			return result;
 		}
 	}
+	
+	/**
+	 * @param dimension Enter 1 for x, 2 for y, 3 for z
+	 * */
+	public int numberOfSectionsOneMoveAwayToWinOurInOneDirection(IBoard board, int dimension)
+	{
+		int result = 0;
+		int[] somePosition = new int[3];
+		IPlayer somePlayer;
+		for(int i = 0; i < board.getSize(); i++)
+		{
+			for(int j = 0; j < board.getSize(); j++)
+			{
+				int numberOfOurPlacesOccupied = 0;
+				for(int k = 0; k < board.getSize(); k++)
+				{
+					if(dimension == 1)
+					{
+						somePosition = new int[] {k,i,j};
+					}
+					else if(dimension == 2)
+					{
+						somePosition = new int[] {i,k,j};
+					}
+					else if(dimension == 3)
+					{
+						somePosition = new int[] {i,j,k};
+					}
+					else
+					{
+						return 0;
+					}
+					somePlayer = board.getFieldValue(somePosition);
+					if(somePlayer != null && somePlayer == player)
+					{
+						numberOfOurPlacesOccupied++;
+					}
+					if(k == (board.getSize() - 1))
+					{
+						if(numberOfOurPlacesOccupied == (board.getSize() - 1))
+						{
+							result++;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @param exceptDimension Enter 1 for diagonals in yz plane.<br />
+	 * Enter 2 for diagonals in xz plane.<br />
+	 * Enter 3 for diagonals in xy plane.<br />
+	 * */
+	private int numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToWin(IBoard board, int exceptDimension)
+	{
+		int result = 0;
+		int[] somePosition = new int[3];
+		IPlayer somePlayer;
+		for(int i = 0; i < board.getSize(); i++)		// For first diagonal
+		{
+			int numberOfOurPlacesOccupied = 0;
+			for(int j =0, k=0; j < board.getSize(); j++, k++)
+			{
+				if(exceptDimension == 1)
+				{
+					somePosition = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)
+				{
+					somePosition = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)
+				{
+					somePosition = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePosition);
+				if(somePlayer == player)
+				{
+					numberOfOurPlacesOccupied++;
+				}
+				
+				if(j == (board.getSize() - 1))
+				{
+					if(numberOfOurPlacesOccupied == (board.getSize() - 1))
+					{
+						result++;
+					}
+				}
+			}
+		}
+		for(int i = 0; i < board.getSize(); i++)			// For second diagonal
+		{
+			int numberOfOurPlacesOccupied = 0;
+			for(int j = (board.getSize() - 1), k=0; k < board.getSize(); j--, k++)
+			{
+				if(exceptDimension == 1)
+				{
+					somePosition = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)
+				{
+					somePosition = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)
+				{
+					somePosition = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePosition);
+				if(somePlayer == player)
+				{
+					numberOfOurPlacesOccupied++;
+				}
+				
+				if(k == (board.getSize() - 1))
+				{
+					if(numberOfOurPlacesOccupied == (board.getSize()-1))
+					{
+						result++;
+					}
+				}
+			}
+		}
+		return result;
+	}
 }
