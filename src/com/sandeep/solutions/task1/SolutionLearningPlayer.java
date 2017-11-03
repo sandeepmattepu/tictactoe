@@ -159,7 +159,7 @@ public class SolutionLearningPlayer implements IPlayer
 		if(finalStateOfBoard.isFinalState())
 		{
 			double trainingExampleScore = 0;
-			float learningRate = 0.01f;
+			float learningRate = 0.0001f;
 			IPlayer winner = finalStateOfBoard.getWinner();
 			if(winner == null)		// Draw match
 			{

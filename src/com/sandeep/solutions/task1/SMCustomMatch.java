@@ -8,7 +8,7 @@ import de.ovgu.dke.teaching.ml.tictactoe.player.RandomPlayer;
 
 public class SMCustomMatch
 {
-	private static int numberOfMatches = 9;
+	private static int numberOfMatches = 25;
 	public static void main(String[] args)
 	{
 		IBoard simpleBoard = new Board3D(5);
