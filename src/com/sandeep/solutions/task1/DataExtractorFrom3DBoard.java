@@ -33,7 +33,9 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  *  21) Number of diagonals which are half or more by opponent in XZ direction <br />
  *  22) Number of diagonals which are half or more by opponent in YZ direction <br />
  *  23) Number of diagonals which are half or more by opponent in XYZ direction. <br />
- *  24) Total number of sections which are filled by our player's more than or equal to half<br />. 
+ *  24) Total number of sections which are filled by our player's more than or equal to half<br />
+ *  25) Total number of sections which are intermixed with our and opponent's places.<br />
+ *   
  * */
 public class DataExtractorFrom3DBoard
 {
@@ -1379,5 +1381,33 @@ public class DataExtractorFrom3DBoard
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * This function gives data about total number of intermixed sections that are available in board.<br />
+	 * For example: If board has |1|2| | then it is counted
+	 * @param board Enter the board to analyze
+	 * @return Total number of intermixed sections that are available in board.
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int totalNumberOfIntermixedSectionsInBoard(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+
+			int result = 0;
+			result += numberOfSectionsWithMixedPositionsInOneDirection(board, 1);
+			result += numberOfSectionsWithMixedPositionsInOneDirection(board, 2);
+			result += numberOfSectionsWithMixedPositionsInOneDirection(board, 3);
+			result += numberOfSectionsIn2DDiagonalDirectionWithMixedPositions(board, 1);
+			result += numberOfSectionsIn2DDiagonalDirectionWithMixedPositions(board, 2);
+			result += numberOfSectionsIn2DDiagonalDirectionWithMixedPositions(board, 3);
+			result += this.numberOfSectionsWithMixedPositionsInXYZDiagonal(board);
+			return result;
+		}
 	}
 }
