@@ -1414,7 +1414,7 @@ public class DataExtractorFrom3DBoard
 	/**
 	 * @param dimension Enter 1 for x, 2 for y, 3 for z
 	 * */
-	public int numberOfSectionsOneMoveAwayToWinOurInOneDirection(IBoard board, int dimension)
+	private int numberOfSectionsOneMoveAwayToWinOurInOneDirection(IBoard board, int dimension)
 	{
 		int result = 0;
 		int[] somePosition = new int[3];
@@ -1443,9 +1443,16 @@ public class DataExtractorFrom3DBoard
 						return 0;
 					}
 					somePlayer = board.getFieldValue(somePosition);
-					if(somePlayer != null && somePlayer == player)
+					if(somePlayer != null)
 					{
-						numberOfOurPlacesOccupied++;
+						if(somePlayer == player)
+						{
+							numberOfOurPlacesOccupied++;
+						}
+						else
+						{
+							break;
+						}
 					}
 					if(k == (board.getSize() - 1))
 					{
@@ -1465,7 +1472,7 @@ public class DataExtractorFrom3DBoard
 	 * Enter 2 for diagonals in xz plane.<br />
 	 * Enter 3 for diagonals in xy plane.<br />
 	 * */
-	private int numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToWin(IBoard board, int exceptDimension)
+	public int numberOfSectionsIn2DDiagonalDirectionOneMoveAwayToWin(IBoard board, int exceptDimension)
 	{
 		int result = 0;
 		int[] somePosition = new int[3];
@@ -1492,9 +1499,16 @@ public class DataExtractorFrom3DBoard
 					return 0;
 				}
 				somePlayer = board.getFieldValue(somePosition);
-				if(somePlayer == player)
+				if(somePlayer != null)
 				{
-					numberOfOurPlacesOccupied++;
+					if(somePlayer == player)
+					{
+						numberOfOurPlacesOccupied++;
+					}
+					else
+					{
+						break;
+					}
 				}
 				
 				if(j == (board.getSize() - 1))
@@ -1528,9 +1542,16 @@ public class DataExtractorFrom3DBoard
 					return 0;
 				}
 				somePlayer = board.getFieldValue(somePosition);
-				if(somePlayer == player)
+				if(somePlayer != null)
 				{
-					numberOfOurPlacesOccupied++;
+					if(somePlayer == player)
+					{
+						numberOfOurPlacesOccupied++;
+					}
+					else
+					{
+						break;
+					}
 				}
 				
 				if(k == (board.getSize() - 1))
