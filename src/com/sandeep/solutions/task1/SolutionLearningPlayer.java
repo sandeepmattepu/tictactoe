@@ -14,11 +14,21 @@ import de.ovgu.dke.teaching.ml.tictactoe.game.Move;
 
 public class SolutionLearningPlayer implements IPlayer 
 {
-	private LinearEquation approximatedTargetFunction = new LinearEquation(21, 1);
+	private LinearEquation approximatedTargetFunction;
 	private List<IBoard> historyOfBoards = new ArrayList<IBoard>();
 	private List<int[]> allLegalMoves = new ArrayList<int[]>();
 	private List<IBoard> allPossibleBoardsAfterLegalMove = new ArrayList<IBoard>();
-	private double[] oldWeights = approximatedTargetFunction.getAllCoefficients();
+	private double[] oldWeights = new double[7];
+	
+	public SolutionLearningPlayer()
+	{
+		super();
+		approximatedTargetFunction = new LinearEquation(6, 1);
+		for(int i = 0; i < oldWeights.length; i++)
+		{
+			oldWeights[i] = approximatedTargetFunction.getCoefficientAt(i);
+		}
+	}
 	
 	public int[] makeMove(IBoard board)
 	{
@@ -127,27 +137,12 @@ public class SolutionLearningPlayer implements IPlayer
 		int[] variableValues = new int[21];
 		try 
 		{
-			variableValues[0] = dataExtractor.numberOfFreeEntireSectionInX(boardToCalculate);
-			variableValues[1] = dataExtractor.numberOfFreeEntireSectionInY(boardToCalculate);
-			variableValues[2] = dataExtractor.numberOfFreeEntireSectionInZ(boardToCalculate);
-			variableValues[3] = dataExtractor.numberOfEntireDiagonalSectionFreeInXY(boardToCalculate);
-			variableValues[4] = dataExtractor.numberOfEntireDiagonalSectionFreeInYZ(boardToCalculate);
-			variableValues[5] = dataExtractor.numberOfEntireDiagonalSectionFreeInXZ(boardToCalculate);
-			variableValues[6] = dataExtractor.numberOfEntireDiagonalSectionFreeInXYZ(boardToCalculate);
-			variableValues[7] = dataExtractor.numberOfSectionHalfFilledInX(boardToCalculate);
-			variableValues[8] = dataExtractor.numberOfSectionHalfFilledInY(boardToCalculate);
-			variableValues[9] = dataExtractor.numberOfSectionHalfFilledInZ(boardToCalculate);
-			variableValues[10] = dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInXY(boardToCalculate);
-			variableValues[11] = dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInYZ(boardToCalculate);
-			variableValues[12] = dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInXZ(boardToCalculate);
-			variableValues[13] = dataExtractor.numberOfDiagonalsOurFilledMoreThanHalfInXYZ(boardToCalculate);
-			variableValues[14] = dataExtractor.numberOfSectionHalfFilledInXByOpponent(boardToCalculate);
-			variableValues[15] = dataExtractor.numberOfSectionHalfFilledInYByOpponent(boardToCalculate);
-			variableValues[16] = dataExtractor.numberOfSectionHalfFilledInZByOpponent(boardToCalculate);
-			variableValues[17] = dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInXY(boardToCalculate);
-			variableValues[18] = dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInYZ(boardToCalculate);
-			variableValues[19] = dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInXZ(boardToCalculate);
-			variableValues[20] = dataExtractor.numberOfDiagonalsOpponentFilledMoreThanHalfInXYZ(boardToCalculate);
+			variableValues[1] = dataExtractor.totalNumberOfEntireFreeSectionsInBoard(boardToCalculate);
+			variableValues[2] = dataExtractor.totalSectionsHalfOrMorePlayerFilledInBoard(boardToCalculate);
+			variableValues[3] = dataExtractor.totalSectionsHalfOrMoreOpponentFilledInBoard(boardToCalculate);
+			variableValues[4] = dataExtractor.totalNumberOfIntermixedSectionsInBoard(boardToCalculate);
+			variableValues[5] = dataExtractor.totalNumberSectionsOneMoveAwayForOurWin(boardToCalculate);
+			variableValues[6] = dataExtractor.totalNumberSectionsOneMoveAwayForOpponentWin(boardToCalculate);
 			
 			result = approximatedTargetFunction.valueOfFunction(variableValues);
 		} 

@@ -116,27 +116,6 @@ public class LinearEquation
 	}
 	
 	/**
-	 * This function gives total value of the function with values which was there previously in them.
-	 * @return Value of the function.
-	 * */
-	public double valueOfFunction()
-	{
-		double result = 0;
-		if(variableValues.length == 0)
-		{
-			return result;
-		}
-		else
-		{
-			for(int i = 0; i < variableValues.length; i++)
-			{
-				result += (coefficientValues[i] * variableValues[i]);
-			}
-			return result;
-		}
-	}
-	
-	/**
 	 * This function gives total value of the function using values present in variables
 	 * @param allVariableValues Enter array which has variable values in them.
 	 * Example : w0 + (w1 * X1) then send {X1 = 9} array
