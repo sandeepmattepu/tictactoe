@@ -26,13 +26,14 @@ import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
  *  14) Number of diagonal sections which are filled by our player's more than or equal to half in xz direction <br />
  *  15) Number of diagonal sections which are filled by our player's more than or equal to half in xyz direction <br />
  *  16) Total number of sections which are filled by our player's more than or equal to half<br />.
- *  15) Number of sections which are half or more filled by opponent in X direction <br />
- *  16) Number of sections which are half or more filled by opponent in Y direction <br />
- *  17) Number of sections which are half or more filled by opponent in Z directions <br />
- *  18) Number of diagonals which are half or more by opponent in XY direction <br />
- *  19) Number of diagonals which are half or more by opponent in XZ direction <br />
- *  20) Number of diagonals which are half or more by opponent in YZ direction <br />
- *  21) Number of diagonals which are half or more by opponent in XYZ direction.
+ *  17) Number of sections which are half or more filled by opponent in X direction <br />
+ *  18) Number of sections which are half or more filled by opponent in Y direction <br />
+ *  19) Number of sections which are half or more filled by opponent in Z directions <br />
+ *  20) Number of diagonals which are half or more by opponent in XY direction <br />
+ *  21) Number of diagonals which are half or more by opponent in XZ direction <br />
+ *  22) Number of diagonals which are half or more by opponent in YZ direction <br />
+ *  23) Number of diagonals which are half or more by opponent in XYZ direction. <br />
+ *  24) Total number of sections which are filled by our player's more than or equal to half<br />. 
  * */
 public class DataExtractorFrom3DBoard
 {
@@ -1109,7 +1110,7 @@ public class DataExtractorFrom3DBoard
 	 *  in board.<br />
 	 * For example: If board has |1|1| | then it is counted when our player is 1
 	 * @param board Enter the board to analyze
-	 * @return Total number of free sections that are available in board.
+	 * @return Total number of sections that are half or more filled by our player's in board
 	 * @throws NonCompatibleBoardException When the board is not 3d
 	 * */
 	public int totalSectionsHalfOrMorePlayerFilledInBoard(IBoard board) throws NonCompatibleBoardException
@@ -1129,6 +1130,35 @@ public class DataExtractorFrom3DBoard
 			result += numberOfDiagonalsOurFilledMoreThanHalfInYZ(board);
 			result += numberOfDiagonalsOurFilledMoreThanHalfInXZ(board);
 			result += numberOfDiagonalsOurFilledMoreThanHalfInXYZ(board);
+			return result;
+		}
+	}
+	
+	/**
+	 * This function gives data about total number of sections that are half or more filled by our opponent's
+	 *  in board.<br />
+	 * For example: If board has |1|1| | then it is counted when our opponent is 1
+	 * @param board Enter the board to analyze
+	 * @return Total number of sections that are half or more filled by our opponent's in board
+	 * @throws NonCompatibleBoardException When the board is not 3d
+	 * */
+	public int totalSectionsHalfOrMoreOpponentFilledInBoard(IBoard board) throws NonCompatibleBoardException
+	{
+		if(board.getDimensions() != 3)
+		{
+			throw exception;
+		}
+		else
+		{
+
+			int result = 0;
+			result += numberOfSectionHalfFilledInXByOpponent(board);
+			result += numberOfSectionHalfFilledInYByOpponent(board);
+			result += numberOfSectionHalfFilledInZByOpponent(board);
+			result += numberOfDiagonalsOpponentFilledMoreThanHalfInXY(board);
+			result += numberOfDiagonalsOpponentFilledMoreThanHalfInYZ(board);
+			result += numberOfDiagonalsOpponentFilledMoreThanHalfInXZ(board);
+			result += numberOfDiagonalsOpponentFilledMoreThanHalfInXYZ(board);
 			return result;
 		}
 	}
