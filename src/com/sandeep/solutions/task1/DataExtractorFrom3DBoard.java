@@ -1168,7 +1168,7 @@ public class DataExtractorFrom3DBoard
 	 * Enter 2 for y direction.<br />
 	 * Enter 3 for z direction.<br />
 	 * */
-	private int numberOfNonWinnableSectionsInOneDirection(IBoard board, int dimension)
+	private int numberOfSectionsWithMixedPositionsInOneDirection(IBoard board, int dimension)
 	{
 		int result = 0;
 		int[] somePosition = new int[3];
@@ -1227,7 +1227,7 @@ public class DataExtractorFrom3DBoard
 	 * Enter 2 for diagonals in xz plane.<br />
 	 * Enter 3 for diagonals in xy plane.<br />
 	 * */
-	private int numberOfNonWinnableSectionsIn2DDiagonalDirection(IBoard board, int exceptDimension)
+	private int numberOfSectionsIn2DDiagonalDirectionWithMixedPositions(IBoard board, int exceptDimension)
 	{
 		int result = 0;
 		int[] somePosition = new int[3];
@@ -1276,6 +1276,66 @@ public class DataExtractorFrom3DBoard
 				}
 			}
 		}
+		for(int i = 0; i < board.getSize(); i++)			// For second diagonal
+		{
+			int numberOfOurPlacesOccupied = 0;
+			int numberOfOppentPlacesOccupied = 0;
+			for(int j = (board.getSize() - 1), k=0; k < board.getSize(); j--, k++)
+			{
+				if(exceptDimension == 1)
+				{
+					somePosition = new int[] {i,j,k};
+				}
+				else if(exceptDimension == 2)
+				{
+					somePosition = new int[] {j,i,k};
+				}
+				else if(exceptDimension == 3)
+				{
+					somePosition = new int[] {j,k,i};
+				}
+				else
+				{
+					return 0;
+				}
+				somePlayer = board.getFieldValue(somePosition);
+				if(somePlayer != null)
+				{
+					if(somePlayer == player)
+					{
+						numberOfOurPlacesOccupied++;
+					}
+					else
+					{
+						numberOfOppentPlacesOccupied++;
+					}
+				}
+				
+				if(k == (board.getSize() - 1))
+				{
+					if(numberOfOppentPlacesOccupied != 0 && numberOfOurPlacesOccupied != 0)
+					{
+						result++;
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
+	public int numberOfSectionsWithMixedPositionsInXYZ(IBoard board)
+	{
+		int result = 0;
+		int[] somePos = new int[3];
+		IPlayer somePlayer;
+		int numberOfOurPlacesOccupied = 0;
+		int numberOfOppentPlacesOccupied = 0;
+		for(int i = 0, j = 0, k = 0; i < board.getSize(); i++, j++, k++)
+		{
+			
+		}
+		numberOfOurPlacesOccupied = 0;
+		numberOfOppentPlacesOccupied = 0;
 		return result;
 	}
 }
