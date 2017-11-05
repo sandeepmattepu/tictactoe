@@ -2,6 +2,7 @@ package com.sandeep.solutions.task1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.sandeep.exceptions.NonCompatibleBoardException;
 import com.sandeep.machine_learning.LinearEquation;
@@ -19,6 +20,7 @@ public class SolutionLearningPlayer implements IPlayer
 	private List<int[]> allLegalMoves = new ArrayList<int[]>();
 	private List<IBoard> allPossibleBoardsAfterLegalMove = new ArrayList<IBoard>();
 	private double[] oldWeights = new double[7];
+	private float learningRate = 0.00015f;
 	
 	public SolutionLearningPlayer()
 	{
@@ -87,18 +89,22 @@ public class SolutionLearningPlayer implements IPlayer
 	private void calculateAllBoardsAfterLegalMoves(IBoard boardToAnalyze)
 	{
 		allPossibleBoardsAfterLegalMove.clear();
-		
-		for(int[] legalPosition : allLegalMoves)
+		int randomNumber = 0;
+		while(allLegalMoves.size() > 0)
 		{
+			// Instead of pattern we add some randomness while learning at beginning
+			randomNumber = ThreadLocalRandom.current().nextInt(0, allLegalMoves.size());
 			IBoard nextBoardAfterMove = boardToAnalyze.clone();
-			IMove moveToMake = new Move(this, legalPosition);
+			IMove moveToMake = new Move(this, allLegalMoves.get(randomNumber));
 			try {
 				nextBoardAfterMove.makeMove(	moveToMake);
 				allPossibleBoardsAfterLegalMove.add(nextBoardAfterMove);
+				allLegalMoves.remove(randomNumber);
 			} catch (IllegalMoveException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -159,7 +165,6 @@ public class SolutionLearningPlayer implements IPlayer
 		if(finalStateOfBoard.isFinalState())
 		{
 			double trainingExampleScore = 0;
-			float learningRate = 0.0001f;
 			IPlayer winner = finalStateOfBoard.getWinner();
 			if(winner == null)		// Draw match
 			{
