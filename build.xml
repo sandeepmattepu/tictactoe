@@ -72,6 +72,7 @@
     <target name="SMCustomMatch">
         <java classname="com.sandeep.solutions.task1.SMCustomMatch" failonerror="true" fork="yes">
             <classpath refid="run.SMCustomMatch.classpath"/>
+        	<arg value = "${matches}"/>
         </java>
     </target>
     <target name="TestComp">

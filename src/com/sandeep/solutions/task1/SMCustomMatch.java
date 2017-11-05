@@ -13,6 +13,7 @@ public class SMCustomMatch
 	private static int numberOfMatches = 10;
 	public static void main(String[] args)
 	{
+		analyzeCommandLineArguments(args);
 		IBoard simpleBoard = new Board3D(5);
 		IPlayer learningPlayer = new SolutionLearningPlayer();
 		IPlayer randomPlayer = new RandomPlayer();
@@ -22,5 +23,24 @@ public class SMCustomMatch
 		Tournament smallTournament = new Tournament(simpleBoard, players, numberOfMatches);
 		smallTournament.run();
 
+	}
+	
+	private static void analyzeCommandLineArguments(String[] args)
+	{
+		if(args.length == 0)
+		{
+			return;
+		}
+		else
+		{
+			try
+			{
+				numberOfMatches = Integer.parseInt(args[0]);
+			}
+			catch(NumberFormatException e)
+			{
+				return;
+			}
+		}
 	}
 }
