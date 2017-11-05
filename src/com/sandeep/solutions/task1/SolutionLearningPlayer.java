@@ -143,6 +143,7 @@ public class SolutionLearningPlayer implements IPlayer
 		int[] variableValues = new int[21];
 		try 
 		{
+			variableValues[0] = 1;
 			variableValues[1] = dataExtractor.totalNumberOfEntireFreeSectionsInBoard(boardToCalculate);
 			variableValues[2] = dataExtractor.totalSectionsHalfOrMorePlayerFilledInBoard(boardToCalculate);
 			variableValues[3] = dataExtractor.totalSectionsHalfOrMoreOpponentFilledInBoard(boardToCalculate);
