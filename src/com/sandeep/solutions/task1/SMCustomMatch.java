@@ -1,12 +1,9 @@
 package com.sandeep.solutions.task1;
 
-import java.util.HashSet;
-import java.util.Set;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IBoard;
 import de.ovgu.dke.teaching.ml.tictactoe.api.IPlayer;
 import de.ovgu.dke.teaching.ml.tictactoe.game.Board3D;
 import de.ovgu.dke.teaching.ml.tictactoe.game.Match;
-import de.ovgu.dke.teaching.ml.tictactoe.game.Tournament;
 import de.ovgu.dke.teaching.ml.tictactoe.player.RandomPlayer;
 
 public class SMCustomMatch
